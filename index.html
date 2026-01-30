@@ -459,6 +459,20 @@
         </div>
     </section>
 
+    <!-- Suggestions Section -->
+    <section id="suggestions" class="py-24 px-6 bg-white border-t border-e5e5e5">
+        <div class="max-w-3xl mx-auto text-center animate-slide-up">
+            <h2 class="text-4xl font-bold mb-4">Help us build the roadmap</h2>
+            <p class="text-lg text-gray-600 mb-8">Tell us what features you'd like to see next. We're building this for
+                you.</p>
+            <form id="suggestion-form" class="flex flex-col gap-4 max-w-md mx-auto">
+                <textarea placeholder="Your feature request or suggestion..." required
+                    class="w-full px-6 py-4 text-base min-h-[120px] resize-none"></textarea>
+                <button type="submit" class="btn-primary text-base">Send Suggestion</button>
+            </form>
+        </div>
+    </section>
+
     <!-- Infrastructure Section -->
     <section class="py-24 px-6 bg-white border-t border-e5e5e5">
         <div class="max-w-7xl mx-auto">
@@ -682,27 +696,48 @@
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
                 const btn = this.querySelector('button[type="submit"]');
-                const input = this.querySelector('input[type="email"]');
-                const email = input.value;
+                const isSuggestion = this.id === 'suggestion-form';
                 const originalBtnText = btn.innerText;
 
+                let payload = {};
+                let apiUrl = 'https://sheetdb.io/api/v1/1dbigeuogp0xi';
+                let successTitle = 'Thanks for joining!';
+                let successMessage = '';
+
+                if (isSuggestion) {
+                    const textarea = this.querySelector('textarea');
+                    const suggestion = textarea.value;
+                    apiUrl = 'https://sheetdb.io/api/v1/0zytuspnqquo0';
+                    payload = {
+                        data: [{
+                            Comments: suggestion,
+                            Timestamp: new Date().toLocaleString()
+                        }]
+                    };
+                    successTitle = 'Thank you!';
+                    successMessage = "Your suggestion has been recorded. Let's build together.";
+                } else {
+                    const input = this.querySelector('input[type="email"]');
+                    const email = input.value;
+                    payload = {
+                        data: [{
+                            Email: email,
+                            Timestamp: new Date().toLocaleString()
+                        }]
+                    };
+                    successMessage = `We'll reach out to ${email} soon.`;
+                }
+
                 btn.disabled = true;
-                btn.innerText = 'Joining...';
+                btn.innerText = isSuggestion ? 'Sending...' : 'Joining...';
 
                 try {
-                    const response = await fetch('https://sheetdb.io/api/v1/1dbigeuogp0xi', {
+                    const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({
-                            data: [
-                                {
-                                    Email: email,
-                                    Timestamp: new Date().toLocaleString()
-                                }
-                            ]
-                        })
+                        body: JSON.stringify(payload)
                     });
 
                     if (response.ok) {
@@ -710,8 +745,8 @@
                         container.innerHTML = `
                             <div class="animate-scale flex flex-col items-center gap-2">
                                 <div class="w-12 h-12 bg-green-50 text-green-600 rounded-full flex items-center justify-center text-2xl">✓</div>
-                                <h3 class="text-xl font-bold">Thanks for joining!</h3>
-                                <p class="text-gray-600">We'll reach out to ${email} soon.</p>
+                                <h3 class="text-xl font-bold">${successTitle}</h3>
+                                <p class="text-gray-600">${successMessage}</p>
                             </div>
                         `;
                     } else {
