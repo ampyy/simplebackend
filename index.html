@@ -272,8 +272,14 @@
         /* Grid layout for use cases */
         .grid-2-4 {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(1, 1fr);
             gap: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .grid-2-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (min-width: 1024px) {
@@ -291,7 +297,7 @@
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-black flex items-center justify-center text-white text-sm font-bold">T</div>
-                <span class="text-lg font-bold hidden sm:inline">TheGreatRoadmap</span>
+                <span class="text-lg font-bold">TheGreatRoadmap</span>
             </div>
             <div class="hidden lg:flex items-center gap-8">
                 <a href="#features" class="text-sm text-gray-600 hover:text-black transition-smooth">Features</a>
@@ -299,7 +305,7 @@
                 <a href="#how-it-works" class="text-sm text-gray-600 hover:text-black transition-smooth">How It
                     Works</a>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-3">
                 <a href="#waitlist" class="btn-primary text-sm">Join the Waitlist</a>
             </div>
         </div>
@@ -318,22 +324,20 @@
                         Login, create tables, and get instant REST APIs you can use anywhere. Build apps, dashboards, or
                         forms without writing a single backend line.
                     </p>
-                    <div class="mb-8 flex flex-col lg:flex-row items-center gap-4">
+                    <div class="mb-8">
                         <form class="flex flex-col sm:flex-row gap-3 w-full max-w-md animate-slide-up">
                             <input type="email" placeholder="you@example.com" required
                                 class="flex-1 px-6 py-4 text-base">
                             <button type="submit" class="btn-primary text-base">Join the Waitlist</button>
                         </form>
-                        <button class="btn-secondary text-base whitespace-nowrap">Suggest Features</button>
                     </div>
 
                 </div>
 
                 <!-- Right -->
                 <div class="relative animate-slide-in-right">
-                    <img src="./images/herosection.png" alt="TheGreatRoadmap Dashboard"
-                        class="w-full rounded-2xl shadow-xl border border-gray-100 animate-float"
-                        style="aspect-ratio: 1.2; object-fit: cover;">
+                    <img src="./images/download.png" alt="TheGreatRoadmap Dashboard"
+                        class="w-full rounded-2xl animate-float" style="object-fit: contain;">
                 </div>
             </div>
 
@@ -346,10 +350,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="mb-16 animate-slide-up">
                 <h2 class="text-4xl lg:text-5xl mb-4">Everything you need to ship faster</h2>
-                <p class="text-lg text-gray-600 mb-8">Built for both technical and non-technical teams</p>
-                <div class="animate-slide-up">
-                    <a href="#waitlist" class="btn-primary text-base inline-block">Join the Waitlist</a>
-                </div>
+                <p class="text-lg text-gray-600">Built for both technical and non-technical teams</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -366,7 +367,7 @@
                     <div class="feature-icon mb-4 rounded-lg bg-green-50 text-green-600 border-none">⚡</div>
                     <h3 class="text-lg font-bold mb-3">Auto-Generated REST APIs</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Every table gets ready-to-use endpoints for GET,
-                        POST, PUT, DELETE — instantly.</p>
+                        POST, PUT, DELETE — instantly, with configurable rate limits, caching, indexing, and more.</p>
                 </div>
 
                 <!-- Feature 3 -->
@@ -613,6 +614,7 @@
                 <h2 class="text-7xl lg:text-9xl font-black tracking-tighter uppercase select-none">
                     <span class="text-gray-300">Let's</span> <span class="text-black">Build</span>
                 </h2>
+                <p class="mt-4 text-xl font-bold text-black">Backend so simple, its like playing with data</p>
             </div>
         </div>
     </section>
@@ -696,8 +698,8 @@
                         body: JSON.stringify({
                             data: [
                                 {
-                                    email: email,
-                                    timestamp: new Date().toLocaleString()
+                                    Email: email,
+                                    Timestamp: new Date().toLocaleString()
                                 }
                             ]
                         })
